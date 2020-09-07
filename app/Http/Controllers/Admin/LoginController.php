@@ -113,6 +113,7 @@ class LoginController extends Controller
                 //修改登录数据
                 $account = Auth::guard('admin')->user();
 
+                //session(['account_id'=>$account->id]);
                 //event(new adminLogin($account));
 
                 $account->login_num = $account->login_num+1;//登录次数

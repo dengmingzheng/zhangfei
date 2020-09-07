@@ -36,5 +36,17 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>['auth.admin'
 
     //店铺主营分类
     Route::get('/businesses','StoreController@businesses');//店铺主营分类列表
+
+    /*网站*/
+    Route::get('/articleClasses','ArticleController@articleClasses');//文章分类列表
+    Route::match(['get', 'post'], 'articleClasses/create', 'ArticleController@createArticleClasses');//添加文章分类
+    Route::match(['get', 'put'], 'articleClasses/edit', 'ArticleController@editArticleClasses');//编辑文章分类
+    Route::delete('/articleClasses/del', 'ArticleController@delArticleClasses');//删除文章分类
+
+    Route::get('/articles','ArticleController@articles');//文章列表
+    Route::match(['get', 'post'], 'articles/create', 'ArticleController@createArticle');//添加文章
+    Route::match(['get', 'put'], 'articles/edit', 'ArticleController@editArticle');//编辑文章
+    Route::delete('/articles/del', 'ArticleController@delArticle');//删除文章
+    Route::post('articles/imageUpload','ArticleController@upload');//上传图片
 });
 

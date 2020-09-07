@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InformationTypeRequest extends FormRequest
+class ArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,19 +26,21 @@ class InformationTypeRequest extends FormRequest
         switch ($this->method()){
             case 'POST':{
                 return [
-                    'name' =>['required','max:100','unique:information_types'],
-                    'parent_id' =>['nullable','integer'],
-                    'status' =>['required','boolean'],
-                    'sort' =>['required','integer']
+                    'title' =>['required','max:100','unique:articles'],
+                    'ac_id' =>['required','integer'],
+                    'is_show' =>['required','boolean'],
+                    'sort' =>['required','integer'],
+                    'author'=>['required','max:30'],
                 ];
             }
 
             case 'PUT':{
                 return [
-                    'name' =>['required','max:100'],
-                    'parent_id' =>['nullable','integer'],
-                    'status' =>['required','boolean'],
+                    'title' =>['required','max:50'],
+                    'ac_id' =>['required','integer'],
+                    'is_show' =>['required','boolean'],
                     'sort' =>['required','integer'],
+                    'author'=>['required','max:30'],
                     'id' =>['required','integer']
                 ];
             }
@@ -57,16 +59,19 @@ class InformationTypeRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'请输入分类名称',
-            'name.max'=>'分类名称最大长度为100位',
-            'name.unique'=>'分类名称已存在',
-            'parent_id.integer'=>'所属分类必须为整数',
-            'status.required'=>'请选择状态',
-            'status.boolean'=>'状态参数错误',
+            'title.required'=>'请输入分类名称',
+            'title.max'=>'分类名称最大长度为50位',
+            'title.unique'=>'分类名称已存在',
+            'ac_id.required'=>'请选择所属分类',
+            'ac_id.integer'=>'所属分类必须为整数',
+            'is_show.required'=>'请选择状态',
+            'is_show.boolean'=>'状态参数错误',
             'sort.required'=>'请选择排序',
             'sort.integer'=>'排序必须为整数',
             'id.required'=>'参数错误',
             'id.integer'=>'参数错误',
+            'author.required'=>'请输入作者',
+            'author.max'=>'作者最大长度为30位',
         ];
     }
 }

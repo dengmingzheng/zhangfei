@@ -3,23 +3,25 @@
     <div class="header_line">
         <h3>网站管理</h3>
         <ul class="tab-base">
-            <li><a href="{{url('admin/informationTypes')}}"><span>资讯分类</span></a></li>
-            <li><a class="current"><span>添加资讯分类</span></a></li>
+            <li><a href="{{url('admin/articleClasses')}}"><span>文章分类</span></a></li>
+            <li><a class="current"><span>编辑文章分类</span></a></li>
         </ul>
     </div>
 
 
     <div class="content-group">
-        <form method="post" action="{{url('admin/informationTypes/create')}}" id="form">
+        <form method="post" action="{{url('admin/articleClasses/edit')}}" id="form">
             @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$detail['id']}}"/>
             <table class="table tb-type2">
                 <tbody>
                 <tr class="noborder">
                     <td colspan="2"><label class="validation">分类名称:</label></td>
                 </tr>
                 <tr class="noborder">
-                    <td class="vatop rowform"><input type="text" value="{{old('name')}}"  name="name" class="txt"></td>
-                    <td class="vatop tips">{{$errors->first('name')}}</td>
+                    <td class="vatop rowform"><input type="text" value="{{$detail['title']}}"  name="title" class="txt"></td>
+                    <td class="vatop tips">{{$errors->first('title')}}</td>
                 </tr>
 
                 <tr class="">
@@ -29,12 +31,12 @@
                     <td class="vatop rowform">
                         <select id="parent_id" name="parent_id" class="valid">
                             <option value="">--请选择所属分类--</option>
-                            @if(!empty($categoryList))
-                                @foreach($categoryList as $val)
-                                    <option value="{{$val['id']}}" @if(request()->input('parent_id') == $val['id']) selected="selected" @endif>{{$val['name']}}</option>
+                            @if(!empty($articleClasses))
+                                @foreach($articleClasses as $val)
+                                    <option value="{{$val['id']}}" @if($detail['parent_id'] == $val['id']) selected="selected" @endif>{{ $val['title'] }}</option>
                                     @if(!empty($val['children']))
                                         @foreach($val['children'] as $item)
-                                            <option value="{{$item['id']}}" @if(request()->input('parent_id') == $item['id']) selected="selected" @endif>&nbsp;&nbsp;--|{{$item['name']}}</option>
+                                            <option value="{{ $item['id'] }}" @if($detail['parent_id'] == $item['id']) selected="selected" @endif>&nbsp;&nbsp;--|{{$item['title']}}</option>
                                         @endforeach
                                     @endif
                                 @endforeach
@@ -48,18 +50,8 @@
                     <td colspan="2" class="required"><label class="validation" for="">排序:</label></td>
                 </tr>
                 <tr class="noborder">
-                    <td class="vatop rowform"><input type="text" value="{{old('sort',255)}}"  name="sort" class="txt"></td>
+                    <td class="vatop rowform"><input type="text" value="{{$detail['sort']}}"  name="sort" class="txt"></td>
                     <td class="vatop tips">{{$errors->first('sort')}} </td>
-                </tr>
-
-                <tr class="noborder">
-                    <td colspan="2" class="required"><label>状态:</label></td>
-                </tr>
-                <tr class="noborder">
-                    <td class="vatop rowform">
-                        <input type="radio" value="0" name="status" @if(old('status') == 0) checked="checked" @endif >禁用 <input type="radio" value="1" name="status" @if(old('status') == 1) checked="checked" @endif >启用
-                    </td>
-                    <td class="vatop tips">{{$errors->first('status')}}</td>
                 </tr>
 
                 </tbody>

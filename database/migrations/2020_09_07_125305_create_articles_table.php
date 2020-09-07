@@ -16,7 +16,9 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ac_id')->index()->comment('分类ID');
-            $table->string('title',100)->comment('文章标题');
+            $table->string('title',100)->unique()->comment('文章标题');
+            $table->string('author',30)->comment('作者');
+            $table->unsignedBigInteger('account_id')->index()->comment('发布人ID');
             $table->text('content')->nullable()->comment('内容');
             $table->string('url')->nullable()->comemnt('跳转链接');
             $table->unsignedTinyInteger('sort')->default(255)->comment('排序');

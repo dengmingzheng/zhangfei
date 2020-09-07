@@ -67,7 +67,7 @@ class BaseService
      * 每页显示的条数
      * @var number
      */
-    public $perPage;
+    public $perPage=15;
 
     /**
      * 查询字段

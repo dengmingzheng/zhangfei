@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use DateTimeInterface;
 
 class Account extends Authenticatable
 {
@@ -30,9 +31,15 @@ class Account extends Authenticatable
     ];
 
     /**
-     * 日期属性
+     * 为数组 / JSON 序列化准备日期。
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
      */
-    protected $dates = ['last_login_time','login_time', 'created_at', 'updated_at', 'deleted_at'];
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
+    }
 
     //角色关联模型
     public function role()

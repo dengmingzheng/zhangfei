@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Menu extends Model
+class Menu extends BaseModel
 {
     use SoftDeletes;
 
@@ -16,16 +15,7 @@ class Menu extends Model
         'parent_id'=>'integer',
         'sort'=>'integer',
         'is_show'=>'integer',
-        'created_at' => 'datetime:Y-m-d H:i:s',
-        'updated_at' => 'datetime:Y-m-d H:i:s',
-        'deleted_at' => 'datetime:Y-m-d H:i:s',
     ];
-
-//    /**
-//     * 日期属性
-//     */
-//    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-//
 
     //关联自身模型 获取父类
     public function parent()
